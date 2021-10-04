@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+# setup adds the personally-defined standard
+# Go package structure and initial resources
+# to the current directory
+
+mkdir bin
+
+cat >bin/run_unit_tests <<EOL
+#!/bin/bash
+# runs unit tests for all Go packages and optionally 
+# generates an HTML visual if "view" argument is provided
+go test -tags test -coverprofile=coverage.out ./...
+if [[ $1 == "view" ]]; then
+    go tool cover -html=coverage.out
+fi
+EOL
+
+chmod +x bin/run_unit_tests
+
+mkdir cmd
+mkdir pkg
+mkdir etc
+
+cat >.gitignore <<EOL
+# unit test output
+coverage.out
+EOL
+
+OWNER_NAME=$(basename $(dirname "$PWD"))
+REPO_NAME=$(basename "$PWD")
+
+cat >README.md <<EOL
+# ${REPO_NAME}
+EOL
+
+go mod init github.com/${OWNER_NAME}/${REPO_NAME} > /dev/null 2>&1
+
+git init > /dev/null 2>&1
