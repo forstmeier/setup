@@ -4,17 +4,104 @@
 # Go package structure and initial resources
 # to the current directory
 
+OWNER_NAME=$(basename $(dirname "$PWD"))
+REPO_NAME=$(basename "$PWD")
+
+mkdir .github
+
+echo "# Code of Conduct
+
+> Working on the project 💡
+
+The \`${REPO_NAME}\` **Code of Conduct** follows three simple rules.  
+
+1. **Creativity**: focus on bringing innovating problem solving to the project  
+2. **Collaboration**: working together with other contributors to develop the best solutions  
+3. **Communication**: sharing ideas with humility, generosity, and the pursuit of truth  
+
+Any problems can be reported to the project maintainer via [direct message](https://twitter.com/messages/compose?recipient_id=168005768).  " > .github/CODE_OF_CONDUCT.md
+
+echo "# Contributing
+
+> Working on the code 💻
+
+The \`${REPO_NAME}\` **Contributing** guidelines follow three basic rules.
+
+1. Run \`gofmt\` and \`golint\` on all submitted code.  
+2. Add or update all unit tests to get as close to 100% coverage as possible.  
+3. Commit messages should a single line without punctuation and a 50 character max.  
+
+Any questions on these can be opened as an Issue with the \`question\` label.  " > .github/CONTRIBUTING.md
+
+echo "custom: ['buymeacoffee.com/forstmeier']" > .github/FUNDING.yaml
+
+echo "### Changes
+
+<!-- 
+Provide bullet point details.
+Include \"fixes <#pr_number>\" to link to an outstanding pull request.
+-->
+
+### Comments
+
+<!-- 
+Provide additional information as needed.
+Keep the text below to alert the maintainer.
+-->
+
+Hey, @forstmeier - here's a pull request to review!  " > .github/PULL_REQUEST_TEMPLATE.md
+
+mkdir .github/ISSUE_TEMPLATE
+
+echo "---
+name: Bug
+about: Create a bug report
+title: ''
+labels: bug
+assignees: forstmeier
+
+---
+
+### Description
+
+<!-- Provide a few sentences for context of what is happening versus the expected behavior -->
+
+### Specifics
+
+<!-- Provide bullet points details and steps to reproduce -->
+
+Hey, @forstmeier - here's a bug to review!  " > .github/ISSUE_TEMPLATE/BUG.md
+
+echo "---
+name: Feature
+about: Create a feature request
+title: ''
+labels: feature
+assignees: forstmeier
+
+---
+
+### Description
+
+<!-- Provide a few sentences for context for new proposed behavior and benefits -->
+
+### Specifics
+
+<!-- Provide bullet points details with code changes and work proposal -->
+
+Hey, @forstmeier - here's a feature to review!  " > .github/ISSUE_TEMPLATE/FEATURE.md
+
 mkdir bin
 
-cat >bin/run_unit_tests <<EOL
-#!/bin/bash
+echo "#!/usr/bin/env bash
+
 # runs unit tests for all Go packages and optionally 
-# generates an HTML visual if "view" argument is provided
+# generates an HTML visual if \"view\" argument is provided
+
 go test -tags test -coverprofile=coverage.out ./...
 if [[ $1 == "view" ]]; then
     go tool cover -html=coverage.out
-fi
-EOL
+fi" > bin/run_unit_tests
 
 chmod +x bin/run_unit_tests
 
@@ -22,17 +109,10 @@ mkdir cmd
 mkdir pkg
 mkdir etc
 
-cat >.gitignore <<EOL
-# unit test output
-coverage.out
-EOL
+echo "# unit test output
+coverage.out" > .gitignore
 
-OWNER_NAME=$(basename $(dirname "$PWD"))
-REPO_NAME=$(basename "$PWD")
-
-cat >README.md <<EOL
-# ${REPO_NAME}
-EOL
+echo "# ${REPO_NAME}" > README.md
 
 go mod init github.com/${OWNER_NAME}/${REPO_NAME} > /dev/null 2>&1
 
