@@ -99,7 +99,7 @@ echo "#!/usr/bin/env bash
 # generates an HTML visual if \"view\" argument is provided
 
 go test -tags test -coverprofile=coverage.out ./...
-if [[ $1 == "view" ]]; then
+if [[ \$1 == "view" ]]; then
     go tool cover -html=coverage.out
 fi" > bin/run_unit_tests
 
