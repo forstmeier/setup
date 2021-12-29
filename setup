@@ -33,7 +33,7 @@ The \`${REPO_NAME}\` **Contributing** guidelines follow three basic rules.
 
 Any questions on these can be opened as an Issue with the \`question\` label.  " > .github/CONTRIBUTING.md
 
-echo "custom: ['buymeacoffee.com/forstmeier']" > .github/FUNDING.yaml
+echo "custom: ['buymeacoffee.com/forstmeier']" > .github/FUNDING.yml
 
 echo "### Changes
 
